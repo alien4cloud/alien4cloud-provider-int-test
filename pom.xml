@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>alien4cloud</groupId>
     <artifactId>alien4cloud-provider-int-test</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.2.0-SM2-SNAPSHOT</version>
 
     <name>Provider end to end integration tests</name>
 
@@ -95,6 +94,11 @@
                     </execution>
                 </executions>
             </plugin>            
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m3</version>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -117,7 +121,7 @@
                                 <configuration>
                                     <tasks>
                                         <delete includeemptydirs="true" failonerror="false">
-                                            <fileset dir="${user.home}/.alien" includes="**/*"/>
+                                            <fileset dir="${user.home}/.alien" includes="**/*" />
                                         </delete>
                                     </tasks>
                                 </configuration>
@@ -158,7 +162,6 @@
                                 <log>${basedir}/target/cargo.log</log>
                                 <output>${basedir}/target/jetty.log</output>
                             </container>
-
                             <configuration>
                                 <properties>
                                     <cargo.servlet.port>8088</cargo.servlet.port>
@@ -166,7 +169,6 @@
                                     <cargo.jvmargs>-Denv=ittest -Dspring.profiles.active=security-demo -Xdebug</cargo.jvmargs>
                                 </properties>
                             </configuration>
-
                             <deployables>
                                 <deployable>
                                     <groupId>alien4cloud</groupId>

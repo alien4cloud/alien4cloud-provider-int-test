@@ -1,0 +1,7 @@
+install template script
+pre_configure_target type script
+configure type script
+start template script
+add_source type script
+custom template script
+custom type script

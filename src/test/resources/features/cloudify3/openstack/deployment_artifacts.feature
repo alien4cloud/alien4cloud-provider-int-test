@@ -2,6 +2,7 @@ Feature: Usage of deployment artifacts with cloudify 3
   # Tested features with this scenario:
   #   - Deployment artifact as a file and directory for nodes and relationships
   #   - Override deployment artifact in Alien
+  #   - Complex property usage with get_property
   Scenario: Usage of deployment artifacts with cloudify 3
     Given I am authenticated with "ADMIN" role
 
@@ -30,6 +31,7 @@ Feature: Usage of deployment artifacts with cloudify 3
     And I create a resource of type "alien.nodes.openstack.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "floatingip" to """{"floating_network_name": "net-pub"}""" for the resource named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "server" to """{"security_groups": ["openbar"]}""" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
+    And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
 
     And I create a new application with name "artifact-test-cfy3" and description "Artifact test with CFY 3" based on the template with name "artifact_test"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes

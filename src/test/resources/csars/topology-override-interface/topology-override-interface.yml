@@ -1,0 +1,99 @@
+tosca_definitions_version: alien_dsl_1_1_0
+
+template_name: TemplateOverrideInterface
+template_author: Nietzsche
+template_version: 1.0.0-SNAPSHOT
+
+description: interface operation overriden in topology (for node and relationship)
+
+imports:
+  - "tosca-normative-types:1.0.0-SNAPSHOT"
+
+topology_template:
+  node_templates:
+    Internet:
+      type: tosca.nodes.Network
+      properties:
+        ip_version: 4  
+    compute:
+      type: tosca.nodes.Compute
+      requirements:
+        - network:
+            node: Internet
+            capability: tosca.capabilities.Connectivity
+            relationship: tosca.relationships.Network
+    software1:
+      type: custom.nodes.MySoftwareComponent
+      requirements:
+        - host: compute
+      interfaces:
+        Standard:
+          create: customscripts/install.sh
+          start:
+            inputs:
+              input1: a scalar value
+              input2: { get_attribute: [SELF, ip_address] }
+            implementation: customscripts/start.sh
+        CustomTemplateInterface:
+          customTemplateOperation: customscripts/custom.sh
+    software2:
+      type: custom.nodes.MySoftwareComponent
+      requirements:
+        - host: compute
+        - software_requirement:
+            node: software1
+            capability: alien.capabilities.SoftwareCapability
+            relationship: alien.relationships.SoftwareConnectToSoftware
+            interfaces:
+              configure:
+                add_target: customscripts/add_target.sh
+                post_configure_source:
+                  inputs:
+                    target_ip: { get_attribute: [TARGET, ip_address] }
+                  implementation: customscripts/post_configure_source.sh
+      interfaces:
+        Standard:
+          configure: customscripts/configure.sh
+        CustomTypeInterface:
+          customTypeOperation: customscripts/custom_override.sh              
+
+node_types:
+  custom.nodes.MySoftwareComponent:
+    derived_from: tosca.nodes.SoftwareComponent
+    description: Just a stuff that can be associated with a MyCompute.
+    capabilities:
+      software_capability:
+        type: alien.capabilities.SoftwareCapability
+        upper_bound: unbounded
+    requirements:
+      - software_requirement: alien.capabilities.SoftwareCapability
+        type: alien.relationships.SoftwareConnectToSoftware
+        lower_bound: 0
+        upper_bound: unbounded
+    interfaces:
+      Standard:
+        create: scripts/install.sh
+        configure: scripts/configure.sh
+      CustomTypeInterface:
+        customTypeOperation: scripts/custom.sh        
+
+relationship_types:
+  alien.relationships.SoftwareConnectToSoftware:
+    derived_from: tosca.relationships.ConnectsTo
+    valid_sources: [ alien.capabilities.SoftwareCapability ]
+    valid_targets: [ alien.capabilities.SoftwareCapability ]
+    interfaces:
+      configure:
+        add_target:
+          inputs:
+            TARGET_IP: { get_attribute: [TARGET, ip_address] }
+          implementation: scripts/add_target.sh
+        add_source: scripts/add_source.sh
+        pre_configure_source:
+          implementation: scripts/pre_configure_source.sh
+        pre_configure_target:
+          implementation: scripts/pre_configure_target.sh
+
+capability_types:
+  alien.capabilities.SoftwareCapability:
+    derived_from: tosca.capabilities.Root

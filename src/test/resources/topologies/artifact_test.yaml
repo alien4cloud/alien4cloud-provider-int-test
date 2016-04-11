@@ -6,12 +6,19 @@ template_author: admin
 
 imports:
   - artifact-test-types:1.0.0-SNAPSHOT
-  - tosca-normative-types:1.0.0-ALIEN11
+  - tosca-normative-types:1.0.0-SNAPSHOT
 
 topology_template:
   node_templates:
     Artifacts:
       type: alien.nodes.Artifacts
+      properties:
+        complex_prop:
+          nested: toto
+          nested_array: [ titi, tuctuc ]
+          nested_map:
+            toctoc: tactac
+            tutu: tata
       requirements:
         - host:
             node: Compute

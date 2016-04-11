@@ -1,0 +1,6 @@
+install type script
+pre_configure_source type script
+configure template script
+post_configure_source template script
+add_target template script
+custom override template script

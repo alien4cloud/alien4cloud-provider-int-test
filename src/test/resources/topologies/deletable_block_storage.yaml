@@ -1,0 +1,34 @@
+tosca_definitions_version: tosca_simple_yaml_1_0_0_wd03
+description: Alien4Cloud generated service template
+template_name: DeletableVolume
+template_version: 0.1.0-SNAPSHOT
+template_author: admin
+
+imports:
+  - tosca-normative-types:1.0.0-SNAPSHOT
+
+topology_template:
+  node_templates:
+    BlockStorage:
+      type: tosca.nodes.BlockStorage
+      properties:
+        size: 1 MB
+      requirements:
+        - attachment:
+            node: Compute
+            capability: tosca.capabilities.Attachment
+            relationship: tosca.relationships.AttachTo
+    Compute:
+      type: tosca.nodes.Compute
+      capabilities:
+        endpoint:
+          properties:
+            protocol: tcp
+            initiator: source
+            network_name: PRIVATE
+            secure: true
+        scalable:
+          properties:
+            min_instances: 1
+            max_instances: 1
+            default_instances: 1

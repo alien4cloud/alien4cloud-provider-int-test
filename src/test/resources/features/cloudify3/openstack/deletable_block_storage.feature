@@ -1,21 +1,18 @@
-Feature: Monitoring and Auto healing
+Feature: Deletable block storage
   # Tested features with this scenario:
-  #   - auto healing
-
-  Scenario: Auto healing withoud scaling
+  #   - Deletable block storage
+  Scenario: Block storage
     Given I am authenticated with "ADMIN" role
 
     # Archives
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
     And I upload the git archive "tosca-normative-types"
-    And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
-    And I upload the git archive "samples/apache"
-    And I upload the local archive "topologies/apache.yml"
+    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
+    And I upload the local archive "topologies/deletable_block_storage.yaml"
 
     # Cloudify 3
     And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin "alien4cloud-cloudify3-provider" from "../a4c-cdfy3-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    # And I upload a plugin from "../alien4cloud-cloudify3-provider"
 
     # Orchestrator and location
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
@@ -29,25 +26,15 @@ Feature: Monitoring and Auto healing
     And I update the property "id" to "02ddfcbb-9534-44d7-974d-5cfd36dfbcab" for the resource named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
     And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
-    And I create a resource of type "alien.nodes.openstack.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the complex property "floatingip" to """{"floating_network_name": "net-pub"}""" for the resource named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the complex property "server" to """{"security_groups": ["openbar"]}""" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
+    And I create a resource of type "alien.cloudify.openstack.nodes.DeletableVolume" named "DeletableVolume" related to the location "Mount doom orchestrator"/"Thark location"
+    And I update the property "size" to "1 gib" for the resource named "DeletableVolume" related to the location "Mount doom orchestrator"/"Thark location"
 
-    And I create a new application with name "apache-autoheal-test" and description "Apache for autoheal test" based on the template with name "apache"
+    And I create a new application with name "block-storage-cfy3" and description "Block Storage with CFY 3" based on the template with name "DeletableVolume"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
-    And I set the following inputs properties
-      | monitoring_interval_inMinute | 1 |
-      | auto_heal | true |
 
     When I deploy it
     Then I should receive a RestResponse with no error
     And The application's deployment must succeed after 15 minutes
-#    And The URL which is defined in attribute "url" of the node "Apache" should work
-
-    # autoheal test
-    When I delete one instance of the openstack compute node "Compute"
-    And I wait for 120 seconds before continuing the test
-    Then The node "Compute" should contain 1 instance(s) not started
-    And all nodes instances must be in "started" state after 15 minutes
-    And I wait for 5 seconds before continuing the test
-    
+    Then I should have a volume on OpenStack with id defined in runtime property "external_id" of the node "BlockStorage"
+    When I undeploy it
+    Then I should not have a volume on OpenStack with id defined in runtime property "external_id" of the node "BlockStorage"

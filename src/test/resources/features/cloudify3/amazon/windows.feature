@@ -10,7 +10,7 @@ Feature: Windows with cloudify 3
     And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
     And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
-    And I upload the git archive "alien4cloud-extended-types/alien-base-types-1.0-SNAPSHOT"
+    And I upload the git archive "alien4cloud-extended-types/alien-base-types"
     And I upload the git archive "samples/helloWindows"
     And I upload the local archive "topologies/windows_amazon.yaml"
 

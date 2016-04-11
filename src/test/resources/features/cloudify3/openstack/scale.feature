@@ -7,7 +7,7 @@ Feature: Test scaling with linux compute + public network + volume with cloudify
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
     And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
-    And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types-1.0-SNAPSHOT"
+    And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I upload the local archive "topologies/scale_storage.yml"
 
     # Cloudify 3
@@ -26,6 +26,7 @@ Feature: Test scaling with linux compute + public network + volume with cloudify
     And I create a resource of type "alien.nodes.openstack.Image" named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "id" to "02ddfcbb-9534-44d7-974d-5cfd36dfbcab" for the resource named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
+    And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I create a resource of type "alien.nodes.openstack.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "floatingip" to """{"floating_network_name": "net-pub"}""" for the resource named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "server" to """{"security_groups": ["openbar"]}""" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"

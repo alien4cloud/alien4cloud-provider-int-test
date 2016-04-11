@@ -9,8 +9,8 @@ Feature: Block storage
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
     And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
-    And I upload the git archive "alien4cloud-extended-types/alien-base-types-1.0-SNAPSHOT"
-    And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types-1.0-SNAPSHOT"
+    And I upload the git archive "alien4cloud-extended-types/alien-base-types"
+    And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I upload the local archive "topologies/block_storage_amazon.yaml"
 
     # Cloudify 3

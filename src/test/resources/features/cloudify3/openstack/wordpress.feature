@@ -1,7 +1,6 @@
 Feature: Deploy wordpress with cloudify 3
   # Tested features with this scenario:
   #   - Network
-  #   - Clean up block storage if deletable_blockstorage is set
   #   - Deployment of wordpress
   Scenario: Wordpress
     Given I am authenticated with "ADMIN" role
@@ -20,8 +19,9 @@ Feature: Deploy wordpress with cloudify 3
     And I upload the git archive "samples/topology-wordpress"
 
     # Cloudify 3
-    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+#    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
+	And I upload a plugin "alien4cloud-cloudify3-provider" from "../a4c-cdfy3"
+#    And I upload a plugin from "../a4c-cdfy3"
 
     # Orchestrator and location
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
@@ -45,17 +45,13 @@ Feature: Deploy wordpress with cloudify 3
     # Application CFY 3
     And I create a new application with name "wordpress-cfy3" and description "Wordpress with CFY 3" based on the template with name "wordpress-template"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
-    And I add a node template "DbStorage" related to the "alien.nodes.ConfigurableBlockStorage:1.0-SNAPSHOT" node type
-    And I update the node template "DbStorage"'s property "location" to "/var/mysql"
-    And I update the node template "DbStorage"'s property "device" to "/dev/vdb"
-    And I update the node template "DbStorage"'s property "file_system" to "ext4"
     And I update the node template "mysql"'s property "storage_path" to "/var/mysql"
-    And I add a relationship of type "tosca.relationships.AttachTo" defined in archive "tosca-normative-types" version "1.0.0.wd06-SNAPSHOT" with source "DbStorage" and target "computeDb" for requirement "attachment" of type "tosca.capabilities.Attachment" and target capability "attach"
-    And I add a node template "internet" related to the "tosca.nodes.Network:1.0.0.wd06-SNAPSHOT" node type
-    And I add a relationship of type "tosca.relationships.Network" defined in archive "tosca-normative-types" version "1.0.0.wd06-SNAPSHOT" with source "computeWww" and target "internet" for requirement "network" of type "tosca.capabilities.Connectivity" and target capability "connection"
-    And I add a node template "privateNetwork" related to the "tosca.nodes.Network:1.0.0.wd06-SNAPSHOT" node type
-    And I add a relationship of type "tosca.relationships.Network" defined in archive "tosca-normative-types" version "1.0.0.wd06-SNAPSHOT" with source "computeDb" and target "privateNetwork" for requirement "network" of type "tosca.capabilities.Connectivity" and target capability "connection"
-    And I add a relationship of type "tosca.relationships.Network" defined in archive "tosca-normative-types" version "1.0.0.wd06-SNAPSHOT" with source "computeWww" and target "privateNetwork" for requirement "network" of type "tosca.capabilities.Connectivity" and target capability "connection"
+    And I add a relationship of type "tosca.relationships.AttachTo" defined in archive "tosca-normative-types" version "1.0.0-SNAPSHOT" with source "DbStorage" and target "computeDb" for requirement "attachment" of type "tosca.capabilities.Attachment" and target capability "attach"
+    And I add a node template "internet" related to the "tosca.nodes.Network:1.0.0-SNAPSHOT" node type
+    And I add a relationship of type "tosca.relationships.Network" defined in archive "tosca-normative-types" version "1.0.0-SNAPSHOT" with source "computeWww" and target "internet" for requirement "network" of type "tosca.capabilities.Connectivity" and target capability "connection"
+    And I add a node template "privateNetwork" related to the "tosca.nodes.Network:1.0.0-SNAPSHOT" node type
+    And I add a relationship of type "tosca.relationships.Network" defined in archive "tosca-normative-types" version "1.0.0-SNAPSHOT" with source "computeDb" and target "privateNetwork" for requirement "network" of type "tosca.capabilities.Connectivity" and target capability "connection"
+    And I add a relationship of type "tosca.relationships.Network" defined in archive "tosca-normative-types" version "1.0.0-SNAPSHOT" with source "computeWww" and target "privateNetwork" for requirement "network" of type "tosca.capabilities.Connectivity" and target capability "connection"
     When I substitute on the current application the node "internet" with the location resource "Mount doom orchestrator"/"Thark location"/"Internet"
     When I substitute on the current application the node "privateNetwork" with the location resource "Mount doom orchestrator"/"Thark location"/"PrivateNetwork"
     And I set the following inputs properties

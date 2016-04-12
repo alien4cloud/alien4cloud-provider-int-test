@@ -11,8 +11,8 @@ Feature: Interface overriding with cloudify 3
     And I upload the local archive "csars/topology-override-interface"
 
     # Cloudify 3
-#    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
+#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
 
     # Orchestrator and location
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"

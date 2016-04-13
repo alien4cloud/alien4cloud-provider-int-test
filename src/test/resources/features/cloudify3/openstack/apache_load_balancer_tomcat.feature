@@ -14,8 +14,8 @@ Feature: Apache load balancer + tomcat
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
     And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
-    And I upload the git archive "alien4cloud-extended-types/alien-base-types-1.0-SNAPSHOT"
-    And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types-1.0-SNAPSHOT"
+    And I upload the git archive "alien4cloud-extended-types/alien-base-types"
+    And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
     And I upload the git archive "samples/apache-load-balancer"
     And I upload the git archive "samples/tomcat-war"
@@ -23,7 +23,7 @@ Feature: Apache load balancer + tomcat
 
     # Cloudify 3
     And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    # And I upload a plugin from "../alien4cloud-cloudify3-provider"
 
     # Orchestrator and location
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
@@ -36,9 +36,9 @@ Feature: Apache load balancer + tomcat
     And I create a resource of type "alien.nodes.openstack.Image" named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "id" to "02ddfcbb-9534-44d7-974d-5cfd36dfbcab" for the resource named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
+    And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I create a resource of type "alien.nodes.openstack.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "floatingip" to """{"floating_network_name": "net-pub"}""" for the resource named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "server" to """{"security_groups": ["openbar"]}""" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
 
     And I create a new application with name "load-balancer-cfy3" and description "Apache load balancer with CFY 3" based on the template with name "apache-load-balancer"

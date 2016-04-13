@@ -5,7 +5,7 @@ template_version: 0.1.0-SNAPSHOT
 template_author: admin
 
 imports:
-  - alien-base-types:1.0-SNAPSHOT
+  - alien-base-types:1.1.0-SNAPSHOT
   - tosca-normative-types:1.0.0-SNAPSHOT
   - hello-windows-types:1.0.0-SNAPSHOT
 

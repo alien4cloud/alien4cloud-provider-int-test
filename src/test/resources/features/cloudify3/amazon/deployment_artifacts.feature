@@ -51,3 +51,7 @@ Feature: Usage of deployment artifacts with cloudify 3
     #test overridding from yaml topology csar
     When I download the remote file "/home/ubuntu/ArtifactsYamlOverride/toOverrideFromYaml.txt" from the node "Compute" with the keypair defined in environment variable "AWS_KEY_PATH" and user "ubuntu"
     Then The downloaded file should have the same content as the local file "topologies/artifact_test/toOverrideFromYaml.txt"
+
+    #test artifacts of the relationship
+    When I download the remote file "/home/ubuntu/relationship/ArtifactsYamlOverride/settingsRel.properties" from the node "Compute" with the keypair defined in environment variable "AWS_KEY_PATH" and user "ubuntu"
+    Then The downloaded file should have the same content as the local file "csars/artifact-test/settingsRel.properties"

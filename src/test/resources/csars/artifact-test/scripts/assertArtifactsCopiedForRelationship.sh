@@ -36,6 +36,7 @@ if [ -z "$properties_file" ]; then
     exit 1
 fi
 echo "properties_file is set to $properties_file"
+cp $properties_file ~/relationship/$SOURCE_NODE/
 
 # This is to test that artifact is really copied with good content and overridden
 if [ -z "$to_be_overridden" ]; then

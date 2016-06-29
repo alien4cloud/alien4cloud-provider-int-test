@@ -48,10 +48,10 @@ node_types:
           implementation: scripts/assertArtifactsCopiedForNode.sh
 
 relationship_types:
-  alien.relationships.ArtifactsHostedOnCompute:
-    derived_from: tosca.relationships.HostedOn
+  alien.test.relationships.ArtifactsDependsOn:
+    derived_from: tosca.relationships.DependsOn
     artifacts:
-      - properties_file: conf/settings.properties
+      - properties_file: settingsRel.properties
         type: tosca.artifacts.File
     interfaces:
       configure:

@@ -2,6 +2,7 @@ Feature: Usage of deployment artifacts with cloudify 3
   # Tested features with this scenario:
   #   - Deployment artifact as a file and directory for nodes and relationships
   #   - Override deployment artifact in Alien
+  #   - Override node deployment artifact in imported yaml topology csar
   #   - Complex property usage with get_property
   Scenario: Usage of deployment artifacts with cloudify 3
     Given I am authenticated with "ADMIN" role
@@ -11,11 +12,12 @@ Feature: Usage of deployment artifacts with cloudify 3
     And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
     And I upload the local archive "csars/artifact-test"
-    And I upload the local archive "topologies/artifact_test.yaml"
+    And I upload the local archive "topologies/artifact_test"
 
     # Cloudify 3
-    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    # And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
+    #And I upload a plugin from "../../a4c-cdfy3"
+    And I upload a plugin "alien4cloud-cloudify3-provider" from "/home/igor/WKS/A4C/a4c-cdfy3"
 
     # Orchestrator and location
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
@@ -41,7 +43,18 @@ Feature: Usage of deployment artifacts with cloudify 3
     When I deploy it
     Then I should receive a RestResponse with no error
     And The application's deployment must succeed after 15 minutes
-    When I download the remote file "/home/ubuntu/toBeOverridden.txt" from the node "Compute" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
-    Then The downloaded file should have the same content as the local file "data/toOverride.txt"
-    When I download the remote file "/home/ubuntu/toBePreserved.txt" from the node "Compute" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
+
+
+    # test preserved deployment artifats
+    When I download the remote file "/home/ubuntu/Artifacts/toBePreserved.txt" from the node "Compute" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
     Then The downloaded file should have the same content as the local file "csars/artifact-test/toBePreserved.txt"
+    When I download the remote file "/home/ubuntu/ArtifactsYamlOverride/toBePreserved.txt" from the node "Compute" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
+    Then The downloaded file should have the same content as the local file "csars/artifact-test/toBePreserved.txt"
+
+    # test overridding from Alien4cloud
+    When I download the remote file "/home/ubuntu/Artifacts/toBeOverridden.txt" from the node "Compute" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
+    Then The downloaded file should have the same content as the local file "data/toOverride.txt"
+
+    #test overridding from yaml topology csar
+    When I download the remote file "/home/ubuntu/ArtifactsYamlOverride/toOverrideFromYaml.txt" from the node "Compute" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
+    Then The downloaded file should have the same content as the local file "topologies/artifact_test/toOverrideFromYaml.txt"

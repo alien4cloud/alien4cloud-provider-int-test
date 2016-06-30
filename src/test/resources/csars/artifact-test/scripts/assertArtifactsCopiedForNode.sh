@@ -1,5 +1,7 @@
 #!/bin/bash
 # This is coming from nodes
+mkdir -p ~/$NODE
+
 if [ -z "$confs_directory" ]; then
     echo "confs_directory is not set"
     exit 1
@@ -34,13 +36,13 @@ if [ -z "$to_be_overridden" ]; then
     exit 1
 fi
 echo "to_be_overridden is set to $to_be_overridden"
-cp $to_be_overridden ~/
+cp $to_be_overridden ~/$NODE/
 if [ -z "$to_be_preserved" ]; then
     echo "to_be_preserved is not set, test failed"
     exit 1
 fi
 echo "to_be_preserved is set to $to_be_preserved"
-cp $to_be_preserved ~/
+cp $to_be_preserved ~/$NODE/
 
 if [ -z "$COMPLEX" ]; then
     echo "COMPLEX is not set, test failed"

@@ -7,7 +7,7 @@ template_version: 1.0.0-SNAPSHOT
 imports:
   - tosca-normative-types:1.0.0-SNAPSHOT
 
-description: Tomcat recipe, including war type and relationship.
+description: A type to test the overriding of a atifact using the API.
 
 data_types:
 
@@ -48,10 +48,10 @@ node_types:
           implementation: scripts/assertArtifactsCopiedForNode.sh
 
 relationship_types:
-  alien.relationships.ArtifactsHostedOnCompute:
-    derived_from: tosca.relationships.HostedOn
+  alien.test.relationships.ArtifactsDependsOn:
+    derived_from: tosca.relationships.DependsOn
     artifacts:
-      - properties_file: conf/settings.properties
+      - properties_file: settingsRel.properties
         type: tosca.artifacts.File
     interfaces:
       configure:

@@ -19,6 +19,10 @@
         </repository>
     </repositories>
 
+    <scm>
+      <connection>scm:git:https://github.com/alien4cloud/alien4cloud-provider-int-test.git</connection>
+    </scm>
+
     <distributionManagement>
         <repository>
             <id>repo.opensource.fastconnect.org</id>
@@ -93,7 +97,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>
             <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>

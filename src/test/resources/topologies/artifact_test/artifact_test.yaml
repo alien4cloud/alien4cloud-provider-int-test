@@ -23,7 +23,30 @@ topology_template:
         - host:
             node: Compute
             capability: tosca.capabilities.Container
-            relationship: alien.relationships.ArtifactsHostedOnCompute
+            relationship: tosca.relationships.HostedOn
+
+    ArtifactsYamlOverride:
+      type: alien.nodes.Artifacts
+      properties:
+        complex_prop:
+          nested: toto
+          nested_array: [ titi, tuctuc ]
+          nested_map:
+            toctoc: tactac
+            tutu: tata
+      requirements:
+        - host:
+            node: Compute
+            capability: tosca.capabilities.Container
+            relationship: tosca.relationships.HostedOn
+        - dependency:
+            node: Artifacts
+            capability: tosca.capabilities.Node
+            relationship: alien.test.relationships.ArtifactsDependsOn
+      artifacts:
+        to_be_overridden:
+          implementation: toOverrideFromYaml.txt
+
     Internet:
       type: tosca.nodes.Network
       properties:

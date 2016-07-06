@@ -55,6 +55,7 @@ Feature: Test scaling with linux compute + public network + volume with cloudify
     When I upload the local file "data/block_storage_test_file.txt" to the node "Compute" instance 0 remote path "/mnt/test/block_storage_test_file.txt" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
     When I upload the local file "data/block_storage_test_file.txt" to the node "Compute" instance 1 remote path "/mnt/test/block_storage_test_file.txt" with the keypair "keys/openstack/alien.pem" and user "ubuntu"
     When I undeploy it
+    And I wait for 31 seconds before continuing the test
     Then I should receive a RestResponse with no error
     # change default instances and redeploy
     Given I update the node template "Compute"'s capability "scalable" of type "tosca.capabilities.Scalable"'s property "default_instances" to "2"

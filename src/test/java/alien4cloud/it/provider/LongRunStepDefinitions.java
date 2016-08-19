@@ -4,7 +4,7 @@ import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.elasticsearch.common.collect.Maps;
+import com.google.common.collect.Maps;
 
 import alien4cloud.it.application.ApplicationStepDefinitions;
 import alien4cloud.it.application.deployment.ApplicationsDeploymentStepDefinitions;

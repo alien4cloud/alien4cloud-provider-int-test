@@ -46,6 +46,7 @@ topology_template:
       artifacts:
         to_be_overridden:
           implementation: toOverrideFromYaml.txt
+          type: tosca.artifacts.File
 
     Internet:
       type: tosca.nodes.Network

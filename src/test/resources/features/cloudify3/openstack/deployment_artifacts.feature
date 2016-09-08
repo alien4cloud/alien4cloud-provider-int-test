@@ -15,8 +15,8 @@ Feature: Usage of deployment artifacts with cloudify 3
     And I upload the local archive "topologies/artifact_test"
 
     # Cloudify 3
-     And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin from "../../a4c-cdfy3"
+    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
+#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
 #    And I upload a plugin "alien4cloud-cloudify3-provider" from "/home/igor/WKS/A4C/a4c-cdfy3"
 
     # Orchestrator and location
@@ -38,8 +38,15 @@ Feature: Usage of deployment artifacts with cloudify 3
 
     And I create a new application with name "artifact-test-cfy3" and description "Artifact test with CFY 3" based on the template with name "artifact_test"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
-    And I update the node template "Artifacts"'s artifact "to_be_overridden" with file at path "src/test/resources/data/toOverride.txt"
-
+    When I upload a file located at "src/test/resources/data/toOverride.txt" to the archive path "data/toBeOverridden.txt"
+    Then I should receive a RestResponse with no error
+    When I execute the operation
+      | type              | org.alien4cloud.tosca.editor.operations.nodetemplate.UpdateNodeDeploymentArtifactOperation |
+      | nodeName          | Artifacts                                                                                  |
+      | artifactName      | to_be_overridden                                                                           |
+      | artifactReference | data/toBeOverridden.txt                                                                    |
+    Then I should receive a RestResponse with no error
+    And I save the topology
     When I deploy it
     Then I should receive a RestResponse with no error
     And The application's deployment must succeed after 15 minutes

@@ -2,8 +2,6 @@ package alien4cloud.it.provider;
 
 import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
-
 import com.google.common.collect.Maps;
 
 import alien4cloud.it.application.ApplicationStepDefinitions;
@@ -12,6 +10,7 @@ import alien4cloud.it.application.deployment.DeploymentTopologyStepDefinitions;
 import alien4cloud.it.common.CommonStepDefinitions;
 import alien4cloud.model.application.Application;
 import cucumber.api.java.en.When;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LongRunStepDefinitions {
@@ -30,7 +29,7 @@ public class LongRunStepDefinitions {
         while (true) {
             String appName = "MyLongRunAppApp-" + deployementCount++;
             log.info("Creating app '" + appName + "'");
-            APPLICATION.I_create_a_new_application_with_name_and_description_based_on_the_template_with_name(appName, "a description", templateName);
+            APPLICATION.iCreateANewApplicationWithNameAndDescriptionBasedOnTheTemplateWithName(appName, "a description", templateName);
             DEPLOYMENT_TOPOLOGY.I_Set_a_unique_location_policy_to_for_all_nodes(orchestratorName, locationName);
             log.info("Deploying app '" + appName + "'");
             APPLICATIONS_DEPLOYMENT_STEP_DEFINITIONS.I_deploy_it();
@@ -49,7 +48,7 @@ public class LongRunStepDefinitions {
         for (int i = 0; i < appCount; i++) {
             String appName = "MyApp-" + i;
             log.info("Creating app '" + appName + "'");
-            APPLICATION.I_create_a_new_application_with_name_and_description_based_on_the_template_with_name("MyApp-" + i, "a description", templateName);
+            APPLICATION.iCreateANewApplicationWithNameAndDescriptionBasedOnTheTemplateWithName("MyApp-" + i, "a description", templateName);
             Application application = ApplicationStepDefinitions.CURRENT_APPLICATION;
             apps.put(i, application);
             DEPLOYMENT_TOPOLOGY.I_Set_a_unique_location_policy_to_for_all_nodes(orchestratorName, locationName);

@@ -3,10 +3,10 @@
   <parent>
     <groupId>alien4cloud</groupId>
     <artifactId>alien4cloud-parent</artifactId>
-    <version>1.3.0-SM4</version>
+    <version>1.3.0-RC1</version>
   </parent>
   <artifactId>alien4cloud-provider-int-test</artifactId>
-  <version>1.3.0-SM4</version>
+  <version>1.3.0-RC1</version>
   <name>Provider end to end integration tests</name>
 
   <repositories>
@@ -42,6 +42,11 @@
       <artifactId>alien4cloud-rest-it</artifactId>
       <version>${project.version}</version>
       <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.6.2</version>
     </dependency>
     <dependency>
       <groupId>alien4cloud</groupId>

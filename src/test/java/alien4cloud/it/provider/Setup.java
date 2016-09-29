@@ -1,5 +1,16 @@
 package alien4cloud.it.provider;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
+
 import alien4cloud.it.Context;
 import alien4cloud.it.application.ApplicationStepDefinitions;
 import alien4cloud.it.application.deployment.ApplicationsDeploymentStepDefinitions;
@@ -14,16 +25,7 @@ import alien4cloud.rest.utils.RestClient;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
 
 @Slf4j
 public class Setup {
@@ -115,12 +117,6 @@ public class Setup {
         Files.copy(new RestClient(artifactUrl).getAsStream(""), tempFile, StandardCopyOption.REPLACE_EXISTING);
         Context.getInstance().registerRestResponse(Context.getRestClientInstance().postMultipart("/rest/plugins", "file", Files.newInputStream(tempFile)));
         COMMON_STEP_DEFINITIONS.I_should_receive_a_RestResponse_with_no_error();
-    }
-
-    @And("^I upload the local archive \"([^\"]*)\"$")
-    public void I_upload_the_local_archive(String archive) throws Throwable {
-        Path archivePath = Context.LOCAL_TEST_DATA_PATH.resolve(archive);
-        SETUP_STEP_DEFINITIONS.uploadArchive(archivePath);
     }
 
     @And("^I should wait for (\\d+) seconds before continuing the test$")

@@ -12,10 +12,6 @@ topology_template:
   node_templates:
     Apache:
       type: alien.nodes.Apache
-      properties:
-        version: 2.4
-        port: 80
-        document_root: /var/www
       requirements:
         - host:
             node: Compute

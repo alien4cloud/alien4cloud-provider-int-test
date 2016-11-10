@@ -31,7 +31,6 @@ Feature: Lifecycle test
      And I update the property "id" to "ami-47a23a30" for the resource named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
      And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
      And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
-     And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
 
 
   Scenario: Scaling default 1 then 2,1,3,1 for A and B

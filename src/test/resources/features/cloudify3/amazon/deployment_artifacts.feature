@@ -27,13 +27,17 @@ Feature: Usage of deployment artifacts with cloudify 3
     And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "id" to "ami-47a23a30" for the resource named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
-    And I update the property "user" to "ubuntu" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
 
     And I create a new application with name "artifact-test-cfy3" and description "Artifact test with CFY 3" based on the template with name "artifact_test"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
-    And I update the node template "Artifacts"'s artifact "to_be_overridden" with file at path "src/test/resources/data/toOverride.txt"
-
+    And I upload a file located at "src/test/resources/data/toOverride.txt" to the archive path "toOverride.txt"
+    And I execute the operation
+      | type              | org.alien4cloud.tosca.editor.operations.nodetemplate.UpdateNodeDeploymentArtifactOperation |
+      | nodeName          | Artifacts                                                                                  |
+      | artifactName      | to_be_overridden                                                                           |
+      | artifactReference | toOverride.txt                                                                             |
+    And I save the topology
     When I deploy it
     Then I should receive a RestResponse with no error
     And The application's deployment must succeed after 15 minutes
@@ -45,7 +49,7 @@ Feature: Usage of deployment artifacts with cloudify 3
     Then The downloaded file should have the same content as the local file "csars/artifact-test/toBePreserved.txt"
 
     # test overridding from Alien4cloud
-    When I download the remote file "/home/ubuntu/Artifacts/toBeOverridden.txt" from the node "Compute" with the keypair defined in environment variable "AWS_KEY_PATH" and user "ubuntu"
+    When I download the remote file "/home/ubuntu/Artifacts/toOverride.txt" from the node "Compute" with the keypair defined in environment variable "AWS_KEY_PATH" and user "ubuntu"
     Then The downloaded file should have the same content as the local file "data/toOverride.txt"
 
     #test overridding from yaml topology csar

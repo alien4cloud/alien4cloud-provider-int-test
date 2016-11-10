@@ -1,8 +1,7 @@
-Feature: Block storage
+Feature: Deletable block storage
   # Tested features with this scenario:
-  #   - Block storage
-  #   - Reuse of an existing block storage
-  Scenario: Block storage
+  #   - Deletable block storage
+  Scenario: Deletable block storage
     Given I am authenticated with "ADMIN" role
 
     # Archives
@@ -14,7 +13,7 @@ Feature: Block storage
     And I upload the local archive "topologies/deletable_block_storage.yaml"
 
     # Cloudify 3
-     And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
+    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
 #    And I upload a plugin from "../alien4cloud-cloudify3-provider"
 
     # Orchestrator and location
@@ -28,9 +27,8 @@ Feature: Block storage
     And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "id" to "ami-47a23a30" for the resource named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
-    And I update the complex property "parameters" to """{"user": ["ubuntu"]}""" for the resource named "Small_Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
-    And I create a resource of type "alien.cloudify.aws.nodes.Volume" named "SmallBlock" related to the location "Mount doom orchestrator"/"Thark location"
+    And I create a resource of type "alien.cloudify.aws.nodes.DeletableVolume" named "SmallBlock" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "size" to "1 gib" for the resource named "SmallBlock" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "device" to "/dev/sdf" for the resource named "SmallBlock" related to the location "Mount doom orchestrator"/"Thark location"
 
@@ -40,6 +38,6 @@ Feature: Block storage
     When I deploy it
     Then I should receive a RestResponse with no error
     And The application's deployment must succeed after 15 minutes
-    Then I should have a volume on AWS with id defined in runtime property "external_id" of the node "BlockStorage"
+    Then I should have a volume on AWS with id defined in runtime property "aws_resource_id" of the node "BlockStorage"
     When I undeploy it
-    Then I should not have a volume on AWS with id defined in runtime property "external_id" of the node "BlockStorage"
+    Then I should not have a volume on AWS with id defined in runtime property "aws_resource_id" of the node "BlockStorage"

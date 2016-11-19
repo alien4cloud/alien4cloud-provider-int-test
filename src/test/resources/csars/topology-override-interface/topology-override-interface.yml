@@ -7,7 +7,7 @@ template_version: 1.0.0-SNAPSHOT
 description: interface operation overriden in topology (for node and relationship)
 
 imports:
-  - "tosca-normative-types:1.0.0-SNAPSHOT"
+  - "tosca-normative-types:1.0.0-ALIEN12"
 
 topology_template:
   node_templates:

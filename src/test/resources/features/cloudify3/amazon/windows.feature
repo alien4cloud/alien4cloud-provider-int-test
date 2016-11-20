@@ -35,7 +35,7 @@ Feature: Windows with cloudify 3
 
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
 
-    And I create a new application with name "windows" and description "Windows with CFY 3" based on the template with name "windows"
+    And I create a new application with name "windows-app-aws" and description "Windows with CFY 3" based on the template with name "windows"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
     When I substitute on the current application the node "PublicNetwork" with the location resource "Mount doom orchestrator"/"Thark location"/"Internet"
 

@@ -6,7 +6,7 @@ Feature: Test scaling with linux compute + public network + volume with cloudify
     # Archives
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "1.2.0"
     And I upload the git archive "tosca-normative-types"
-    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "1.2.0"
+    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "1.3.0"
     And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I upload the local archive "topologies/scale_storage.yml"
 

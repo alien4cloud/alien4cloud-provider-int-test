@@ -17,14 +17,17 @@ Feature: Lifecycle test
 
     # Cloudify 3
      And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-    #And I upload a plugin from "../alien4cloud-cloudify3-provider"
+#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
 
     # Orchestrator and location
      And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
      And I get configuration for orchestrator "Mount doom orchestrator"
      And I update cloudify 3 manager's url to value defined in environment variable "AWS_CLOUDIFY3_MANAGER_URL" for orchestrator with name "Mount doom orchestrator"
+    And I update orchestrator "Mount doom orchestrator"'s configuration property "username" to "admin"
+    And I update orchestrator "Mount doom orchestrator"'s configuration property "password" to "admin"
      And I enable the orchestrator "Mount doom orchestrator"
-     And I create a location named "Thark location" and infrastructure type "amazon" to the orchestrator "Mount doom orchestrator"
+
+    And I create a location named "Thark location" and infrastructure type "amazon" to the orchestrator "Mount doom orchestrator"
      And I create a resource of type "alien.cloudify.aws.nodes.InstanceType" named "Small" related to the location "Mount doom orchestrator"/"Thark location"
      And I update the property "id" to "t2.nano" for the resource named "Small" related to the location "Mount doom orchestrator"/"Thark location"
      And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Ubuntu" related to the location "Mount doom orchestrator"/"Thark location"

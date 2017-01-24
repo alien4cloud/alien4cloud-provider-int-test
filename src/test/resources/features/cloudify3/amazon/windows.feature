@@ -22,17 +22,19 @@ Feature: Windows with cloudify 3
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "Mount doom orchestrator"
     And I update cloudify 3 manager's url to value defined in environment variable "AWS_CLOUDIFY3_MANAGER_URL" for orchestrator with name "Mount doom orchestrator"
-    And I enable the orchestrator "Mount doom orchestrator"
-    And I create a location named "Thark location" and infrastructure type "amazon" to the orchestrator "Mount doom orchestrator"
+    And I update orchestrator "Mount doom orchestrator"'s configuration property "username" to "admin"
+    And I update orchestrator "Mount doom orchestrator"'s configuration property "password" to "admin"
 
+    And I enable the orchestrator "Mount doom orchestrator"
+
+    And I create a location named "Thark location" and infrastructure type "amazon" to the orchestrator "Mount doom orchestrator"
     And I create a resource of type "alien.cloudify.aws.nodes.WindowsCompute" named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the complex property "cloudify_agent" to """{"wait_started_timeout": "216000"}""" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "image_id" to "ami-4b80bf3c" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "instance_type" to "m3.medium" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "key_pair" to the environment variable "AWS_KEY_NAME" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the property "user" to "cloudify" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the property "password" to "Cl@ud1fy234!" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
-
+    And I update the property "user" to "administrator" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
+#    And I update the property "password" to "Cl@ud1fy234!" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
 
     And I create a new application with name "windows-app-aws" and description "Windows with CFY 3" based on the template with name "windows"

@@ -118,15 +118,4 @@ public class Setup {
         Context.getInstance().registerRestResponse(Context.getRestClientInstance().postMultipart("/rest/plugins", "file", Files.newInputStream(tempFile)));
         COMMON_STEP_DEFINITIONS.I_should_receive_a_RestResponse_with_no_error();
     }
-
-    @And("^I should wait for (\\d+) seconds before continuing the test$")
-    public void I_should_wait_for_seconds_before_continuing_the_test(int sleepTimeInSeconds) throws Throwable {
-        I_wait_for_seconds_before_continuing_the_test(sleepTimeInSeconds);
-    }
-
-    @And("^I wait for (\\d+) seconds before continuing the test$")
-    public void I_wait_for_seconds_before_continuing_the_test(int sleepTimeInSeconds) throws Throwable {
-        log.info("Begin sleeping to wait before continuing the test");
-        Thread.sleep(sleepTimeInSeconds * 1000L);
-    }
 }

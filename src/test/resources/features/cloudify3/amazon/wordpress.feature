@@ -9,7 +9,9 @@ Feature: Deploy wordpress with cloudify 3
     # Archives
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "1.2.0"
     And I upload the git archive "tosca-normative-types"
-    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "1.3.0"
+    And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
+    And I upload the git archive "tosca-normative-types"
+    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
     And I upload the git archive "alien4cloud-extended-types/alien-base-types"
     And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
@@ -36,12 +38,11 @@ Feature: Deploy wordpress with cloudify 3
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
 
     # Application CFY 3
-    And I create a new application with name "wordpress-cfy3" and description "Wordpress with CFY 3" based on the template with name "wordpress-template"
+    And I create a new application with name "wordpress-cfy3" and description "Wordpress with CFY 3" based on the template with name "wordpress-topology"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
 
     And I set the following inputs properties
-      | os_arch | x86_64 |
-      | os_type | linux  |
+      | os_distribution | ubuntu  |
 
     When I deploy it
     Then I should receive a RestResponse with no error

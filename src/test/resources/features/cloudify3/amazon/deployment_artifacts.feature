@@ -9,8 +9,8 @@ Feature: Usage of deployment artifacts with cloudify 3
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "1.2.0"
     And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "1.3.0"
-    And I upload the local archive "csars/artifact-test"
-    And I upload the local archive "topologies/artifact_test"
+    And I successfully upload the local archive "csars/artifact-test"
+    And I successfully upload the local archive "topologies/artifact_test"
 
     # Cloudify 3
     And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"

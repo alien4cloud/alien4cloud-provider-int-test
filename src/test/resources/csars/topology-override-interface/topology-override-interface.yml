@@ -1,4 +1,4 @@
-tosca_definitions_version: alien_dsl_1_1_0
+tosca_definitions_version: alien_dsl_1_3_0
 
 template_name: TemplateOverrideInterface
 template_author: Nietzsche
@@ -64,12 +64,12 @@ node_types:
     capabilities:
       software_capability:
         type: alien.capabilities.SoftwareCapability
-        upper_bound: unbounded
+        occurrences: [ 1, unbounded ]
     requirements:
-      - software_requirement: alien.capabilities.SoftwareCapability
-        type: alien.relationships.SoftwareConnectToSoftware
-        lower_bound: 0
-        upper_bound: unbounded
+      - software_requirement:
+          capability: alien.capabilities.SoftwareCapability
+          relationship: alien.relationships.SoftwareConnectToSoftware
+          occurrences: [0, unbounded]
     interfaces:
       Standard:
         create: scripts/install.sh
@@ -80,8 +80,7 @@ node_types:
 relationship_types:
   alien.relationships.SoftwareConnectToSoftware:
     derived_from: tosca.relationships.ConnectsTo
-    valid_sources: [ alien.capabilities.SoftwareCapability ]
-    valid_targets: [ alien.capabilities.SoftwareCapability ]
+    valid_target_types: [ alien.capabilities.SoftwareCapability ]
     interfaces:
       configure:
         add_target:

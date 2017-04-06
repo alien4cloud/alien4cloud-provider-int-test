@@ -691,5 +691,42 @@ Feature: Lifecycle test
     When I call the URL which is defined in registered string "registry_url" with path "/get_instance_log.php?node=GenericA&idx=2" and fetch the response and store it in the context as "GenericA_2_logs"
     Then the registered string "GenericA_2_logs" lines should match the following regex sequence
           | #\d+ - start |
-          | #\d+ - add_target/GenericB/2/${GenericB_2_id} |         
+          | #\d+ - add_target/GenericB/2/${GenericB_2_id} |
 
+
+
+  Scenario: Should be able to read injected properties as input
+
+    Given I am authenticated with "ADMIN" role
+
+    And I create a new application with name "test-lifecycle-3" and description "Test lifecycle with CFY" based on the template with name "demo-lifecycle"
+    And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
+    And I set the following inputs properties
+      | os_arch | x86_64 |
+      | os_type | linux  |
+
+    When I deploy it
+    Then I should receive a RestResponse with no error
+    And The application's deployment must succeed after 15 minutes
+    And The URL which is defined in attribute "url" of the node "Registry" should work
+    And I store the attribute "url" of the node "Registry" as registered string "registry_url"
+
+    When I call the URL which is defined in registered string "registry_url" with path "/get_instance_log.php?node=GenericA&idx=0" and fetch the response and store it in the context as "GenericA_0_log"
+    And I call the URL which is defined in registered string "registry_url" with path "/get_instance_id.php?node=GenericB&idx=0" and fetch the response and store it in the context as "GenericB_0_id"
+
+    Given I can catch the following groups in one line of the registered string "GenericA_0_log" and store them as registered strings
+      | #(\d+) - post_configure_source/GenericB/0/${GenericB_0_id} |
+      | GenericA_0_post_configure_source_GenericB_0_opIdx |
+    When I expand the string "${registry_url}/get_env_log.php?idx=${GenericA_0_post_configure_source_GenericB_0_opIdx}" and store it as "GenericA_0_post_configure_source_GenericB_0_env_url" in the context
+    And I call the URL which is defined in registered string "GenericA_0_post_configure_source_GenericB_0_env_url" with path "" and fetch the response and store it in the context as "GenericA_0_post_configure_source_GenericB_0_env"
+    Then the following expanded regex should be found in the registered string "GenericA_0_post_configure_source_GenericB_0_env"
+      | ^SOURCE_generic_property=default_value$ |
+    Then the following expanded regex should be found in the registered string "GenericA_0_post_configure_source_GenericB_0_env"
+      | ^TARGET_complex_prop=\\{$ |
+      | ^  "nested_map" : \\{$ |
+      | ^    "tutu" : "tata",$ |
+      | ^    "toctoc" : "tactac"$ |
+      | ^  \\},$ |
+      | ^  "nested" : "node toto",$ |
+      | ^  "nested_array" : \\[ "titi", "tuctuc" \\]$ |
+      | ^\\}$ |

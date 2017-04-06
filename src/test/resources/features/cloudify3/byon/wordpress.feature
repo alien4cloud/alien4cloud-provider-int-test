@@ -22,13 +22,13 @@ Feature: Deploy wordpress with cloudify 3 on a byon (nodes are on openstack)
     And I upload the git archive "samples/topology-host-pool-service"
 
     # Cloudify 3 plugin
-    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin "alien4cloud-cloudify3-provider" from "../a4c-cdfy3"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify4-provider"
+#    And I upload a plugin "alien4cloud-cloudify4-provider" from "../a4c-cdfy3"
+#    And I upload a plugin from "../alien4cloud-cloudify4-provider"
 
 	### DEPLOY the POOL-SERVICE
     # Orchestrator and location
-    And I create an orchestrator named "cdfy3-openstack" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
+    And I create an orchestrator named "cdfy3-openstack" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "cdfy3-openstack"
     And I update cloudify 3 manager's url to value defined in environment variable "OPENSTACK_CLOUDIFY3_MANAGER_URL" for orchestrator with name "cdfy3-openstack"
     And I enable the orchestrator "cdfy3-openstack"
@@ -66,7 +66,7 @@ Feature: Deploy wordpress with cloudify 3 on a byon (nodes are on openstack)
 
 	 ## BYON WORDPRESS
 	 # Orchestrator and location
-	 And I create an orchestrator named "cdfy3-byon" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
+	 And I create an orchestrator named "cdfy3-byon" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
 	 And I get configuration for orchestrator "cdfy3-byon"
 	 And I update cloudify 3 manager's url to value defined in environment variable "OPENSTACK_CLOUDIFY3_MANAGER_URL" for orchestrator with name "cdfy3-byon"
 	 And I enable the orchestrator "cdfy3-byon"

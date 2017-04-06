@@ -32,7 +32,7 @@ Feature: Deletable block storage
     And I update the property "size" to "1 gib" for the resource named "SmallBlock" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "device" to "/dev/sdf" for the resource named "SmallBlock" related to the location "Mount doom orchestrator"/"Thark location"
 
-    And I create a new application with name "block-storage-cfy3" and description "Block Storage with CFY 3" based on the template with name "DeletableVolume"
+    And I create a new application with name "deletable-block-storage-cfy3" and description "Block Storage with CFY 3" based on the template with name "DeletableVolume"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
 
     When I deploy it

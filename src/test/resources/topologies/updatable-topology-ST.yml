@@ -1,0 +1,311 @@
+tosca_definitions_version: alien_dsl_1_3_0
+description: ""
+metadata:
+    template_name: UpdatableTopologyST
+    template_version: 0.1.0-SNAPSHOT
+    template_author: admin
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN12
+  - apache-type:2.0.0-SNAPSHOT
+  - demo-lifecycle:1.0.0-SNAPSHOT
+  - php-type:2.0.0-SNAPSHOT
+
+topology_template:
+  inputs:
+    registry_host:
+      type: string
+      required: false
+  node_templates:
+    GenericHostS:
+      type: org.alien4cloud.nodes.GenericHost
+      requirements:
+        - host:
+            node: ComputeS
+            capability: tosca.capabilities.Container
+            relationship: tosca.relationships.HostedOn
+        - dependency:
+            node: RegistryConfigurerS
+            capability: tosca.capabilities.Node
+            relationship: tosca.relationships.DependsOn
+    RegistryConfigurerS:
+      type: org.alien4cloud.nodes.RegistryConfigurer
+      properties:
+        registry_host: { get_input: registry_host }
+      requirements:
+        - host:
+            node: ComputeS
+            capability: tosca.capabilities.Container
+            relationship: tosca.relationships.HostedOn
+    GenericS:
+      type: org.alien4cloud.nodes.Generic
+      properties:
+        generic_property: "ST"
+      requirements:
+        - host:
+            node: GenericHostS
+            capability: tosca.capabilities.Container
+            relationship: org.alien4cloud.relationships.GenericHostedOnGenericHost
+    ComputeS:
+      type: tosca.nodes.Compute
+      capabilities:
+        endpoint:
+          properties:
+            secure: true
+            protocol: tcp
+            network_name: PRIVATE
+            initiator: source
+        scalable:
+          properties:
+            min_instances: 1
+            max_instances: 1
+            default_instances: 1
+    GenericT:
+      type: org.alien4cloud.nodes.Generic
+      properties:
+        generic_property: "default_value"
+      requirements:
+        - host:
+            node: GenericHostS
+            capability: tosca.capabilities.Container
+            relationship: org.alien4cloud.relationships.GenericHostedOnGenericHost
+  workflows:
+    install:
+      steps:
+        GenericS_started:
+          node: GenericS
+          activity:
+            set_state: started
+        GenericS_created:
+          node: GenericS
+          activity:
+            set_state: created
+          on-success:
+            - GenericS_configuring
+        GenericHostS_starting:
+          node: GenericHostS
+          activity:
+            set_state: starting
+          on-success:
+            - start_GenericHostS
+        start_GenericHostS:
+          node: GenericHostS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.start
+          on-success:
+            - GenericHostS_started
+        RegistryConfigurerS_configuring:
+          node: RegistryConfigurerS
+          activity:
+            set_state: configuring
+          on-success:
+            - configure_RegistryConfigurerS
+        configure_RegistryConfigurerS:
+          node: RegistryConfigurerS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.configure
+          on-success:
+            - RegistryConfigurerS_configured
+        GenericS_configuring:
+          node: GenericS
+          activity:
+            set_state: configuring
+          on-success:
+            - configure_GenericS
+        GenericS_creating:
+          node: GenericS
+          activity:
+            set_state: creating
+          on-success:
+            - create_GenericS
+        GenericHostS_configured:
+          node: GenericHostS
+          activity:
+            set_state: configured
+          on-success:
+            - GenericHostS_starting
+        GenericHostS_creating:
+          node: GenericHostS
+          activity:
+            set_state: creating
+          on-success:
+            - create_GenericHostS
+        create_GenericHostS:
+          node: GenericHostS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.create
+          on-success:
+            - GenericHostS_created
+        GenericHostS_started:
+          node: GenericHostS
+          activity:
+            set_state: started
+          on-success:
+            - Generic_initial
+            - GenericS_initial
+        RegistryConfigurerS_configured:
+          node: RegistryConfigurerS
+          activity:
+            set_state: configured
+          on-success:
+            - RegistryConfigurerS_starting
+        GenericHostS_created:
+          node: GenericHostS
+          activity:
+            set_state: created
+          on-success:
+            - GenericHostS_configuring
+        RegistryConfigurerS_started:
+          node: RegistryConfigurerS
+          activity:
+            set_state: started
+          on-success:
+            - GenericHostS_initial
+        GenericS_configured:
+          node: GenericS
+          activity:
+            set_state: configured
+          on-success:
+            - GenericS_starting
+        RegistryConfigurerS_creating:
+          node: RegistryConfigurerS
+          activity:
+            set_state: creating
+          on-success:
+            - RegistryConfigurerS_created
+        GenericS_starting:
+          node: GenericS
+          activity:
+            set_state: starting
+          on-success:
+            - start_GenericS
+        configure_GenericHostS:
+          node: GenericHostS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.configure
+          on-success:
+            - GenericHostS_configured
+        RegistryConfigurerS_initial:
+          node: RegistryConfigurerS
+          activity:
+            set_state: initial
+          on-success:
+            - RegistryConfigurerS_creating
+        start_GenericS:
+          node: GenericS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.start
+          on-success:
+            - GenericS_started
+        configure_GenericS:
+          node: GenericS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.configure
+          on-success:
+            - GenericS_configured
+        GenericHostS_configuring:
+          node: GenericHostS
+          activity:
+            set_state: configuring
+          on-success:
+            - configure_GenericHostS
+        ComputeS_install:
+          node: ComputeS
+          activity:
+            delegate: install
+          on-success:
+            - RegistryConfigurerS_initial
+        GenericHostS_initial:
+          node: GenericHostS
+          activity:
+            set_state: initial
+          on-success:
+            - GenericHostS_creating
+        RegistryConfigurerS_starting:
+          node: RegistryConfigurerS
+          activity:
+            set_state: starting
+          on-success:
+            - start_RegistryConfigurerS
+        GenericS_initial:
+          node: GenericS
+          activity:
+            set_state: initial
+          on-success:
+            - GenericS_creating
+        start_RegistryConfigurerS:
+          node: RegistryConfigurerS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.start
+          on-success:
+            - RegistryConfigurerS_started
+        RegistryConfigurerS_created:
+          node: RegistryConfigurerS
+          activity:
+            set_state: created
+          on-success:
+            - RegistryConfigurerS_configuring
+        create_GenericS:
+          node: GenericS
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.create
+          on-success:
+            - GenericS_created
+        Generic_initial:
+          node: GenericT
+          activity:
+            set_state: initial
+          on-success:
+            - Generic_creating
+        Generic_creating:
+          node: GenericT
+          activity:
+            set_state: creating
+          on-success:
+            - create_Generic
+        create_Generic:
+          node: GenericT
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.create
+          on-success:
+            - Generic_created
+        Generic_created:
+          node: GenericT
+          activity:
+            set_state: created
+          on-success:
+            - Generic_configuring
+        Generic_configuring:
+          node: GenericT
+          activity:
+            set_state: configuring
+          on-success:
+            - configure_Generic
+        configure_Generic:
+          node: GenericT
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.configure
+          on-success:
+            - Generic_configured
+        Generic_configured:
+          node: GenericT
+          activity:
+            set_state: configured
+          on-success:
+            - Generic_starting
+        Generic_starting:
+          node: GenericT
+          activity:
+            set_state: starting
+          on-success:
+            - start_Generic
+        start_Generic:
+          node: GenericT
+          activity:
+            call_operation: tosca.interfaces.node.lifecycle.Standard.start
+          on-success:
+            - Generic_started
+        Generic_started:
+          node: GenericT
+          activity:
+            set_state: started

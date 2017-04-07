@@ -13,20 +13,23 @@ Feature: Apache load balancer + tomcat
     # Archives
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "1.2.0"
     And I upload the git archive "tosca-normative-types"
-    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "1.3.0"
+    And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
+    And I upload the git archive "tosca-normative-types"
+    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
     And I upload the git archive "alien4cloud-extended-types/alien-base-types"
     And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
+    And I upload the git archive "samples/jdk"
     And I upload the git archive "samples/apache-load-balancer"
     And I upload the git archive "samples/tomcat-war"
     And I upload the git archive "samples/topology-load-balancer-tomcat"
 
     # Cloudify 3
-    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify4-provider"
+#    And I upload a plugin from "../alien4cloud-cloudify4-provider"
 
     # Orchestrator and location
-    And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
+    And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "Mount doom orchestrator"
     And I update cloudify 3 manager's url to value defined in environment variable "AWS_CLOUDIFY3_MANAGER_URL" for orchestrator with name "Mount doom orchestrator"
     And I enable the orchestrator "Mount doom orchestrator"
@@ -38,7 +41,7 @@ Feature: Apache load balancer + tomcat
     And I autogenerate the on-demand resources for the location "Mount doom orchestrator"/"Thark location"
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
 
-    And I create a new application with name "load-balancer-cfy3" and description "Apache load balancer with CFY 3" based on the template with name "apache-load-balancer"
+    And I create a new application with name "load-balancer-cfy3" and description "Apache load balancer with CFY 3" based on the template with name "war-apache-load-balanced-topology"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
     And I set the following inputs properties
       | os_arch | x86_64 |

@@ -7,35 +7,35 @@ Feature: Windows with cloudify 3
 
     # Archives
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "1.2.0"
-    And I upload the git archive "tosca-normative-types"
-    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "1.3.0"
+    And I successfully upload the git archive "tosca-normative-types"
+    And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
     And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
-    And I upload the git archive "alien4cloud-extended-types/alien-base-types"
-    And I upload the git archive "samples/helloWindows"
-    And I upload the local archive "topologies/windows_amazon.yaml"
+    And I successfully upload the git archive "alien4cloud-extended-types/alien-base-types"
+    And I successfully upload the git archive "samples/helloWindows"
+    And I successfully upload the local archive "topologies/windows_amazon.yaml"
 
     # Cloudify 3
-    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify3-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify3-provider"
+    And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify4-provider"
+#    And I upload a plugin from "../alien4cloud-cloudify4-provider"
 
     # Orchestrator and location
-    And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-3-orchestrator" and bean name "cloudify-orchestrator"
+    And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "Mount doom orchestrator"
     And I update cloudify 3 manager's url to value defined in environment variable "AWS_CLOUDIFY3_MANAGER_URL" for orchestrator with name "Mount doom orchestrator"
     And I enable the orchestrator "Mount doom orchestrator"
     And I create a location named "Thark location" and infrastructure type "amazon" to the orchestrator "Mount doom orchestrator"
 
     And I create a resource of type "alien.cloudify.aws.nodes.WindowsCompute" named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the complex property "cloudify_agent" to """{"wait_started_timeout": "216000"}""" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
+    And I update the complex property "agent_config" to """{"wait_started_timeout": "216000"}""" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "image_id" to "ami-4b80bf3c" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
-    And I update the property "instance_type" to "m3.medium" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
+    And I update the property "instance_type" to "m3.large" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "key_pair" to the environment variable "AWS_KEY_NAME" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "user" to "cloudify" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
     And I update the property "password" to "Cl@ud1fy234!" for the resource named "MediumWindows" related to the location "Mount doom orchestrator"/"Thark location"
 
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
 
-    And I create a new application with name "windows-app-aws" and description "Windows with CFY 3" based on the template with name "windows"
+    And I create a new application with name "windows-aws" and description "Windows with CFY 3" based on the template with name "windows"
     And I Set a unique location policy to "Mount doom orchestrator"/"Thark location" for all nodes
     When I substitute on the current application the node "PublicNetwork" with the location resource "Mount doom orchestrator"/"Thark location"/"Internet"
 

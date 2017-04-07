@@ -1,0 +1,40 @@
+tosca_definitions_version: alien_dsl_1_3_0
+description: ""
+metadata:
+    template_name: UpdatableTopologyFailScalable
+    template_version: 0.1.0-SNAPSHOT
+    template_author: admin
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN12
+  - apache-type:2.0.0-SNAPSHOT
+
+topology_template:
+  node_templates:
+    Compute:
+      type: tosca.nodes.Compute
+      capabilities:
+        os:
+          properties:
+            architecture: "x86_64"
+            type: linux
+            distribution: ubuntu
+    Apache:
+      type: org.alien4cloud.nodes.Apache
+      properties:
+        component_version: "2.4"
+        port: 80
+        document_root: "/var/www"
+      requirements:
+        - host:
+            node: Compute
+            capability: tosca.capabilities.Container
+            relationship: tosca.relationships.HostedOn
+    Compute_2:
+      type: tosca.nodes.Compute
+      capabilities:
+        scalable:
+          properties:
+            min_instances: 1
+            max_instances: 2
+            default_instances: 1

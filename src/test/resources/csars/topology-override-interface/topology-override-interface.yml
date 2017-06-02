@@ -1,4 +1,4 @@
-tosca_definitions_version: alien_dsl_1_3_0
+tosca_definitions_version: alien_dsl_1_4_0
 
 template_name: TemplateOverrideInterface
 template_author: Nietzsche
@@ -7,7 +7,7 @@ template_version: 1.0.0-SNAPSHOT
 description: interface operation overriden in topology (for node and relationship)
 
 imports:
-  - "tosca-normative-types:1.0.0-ALIEN12"
+  - "tosca-normative-types:1.0.0-ALIEN14"
 
 topology_template:
   node_templates:

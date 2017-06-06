@@ -7,7 +7,7 @@ metadata:
 
 imports:
   - tosca-normative-types:1.0.0-ALIEN14
-  - mongod-type:1.4.0-SNAPSHOT
+  - mongo-types:1.4.0-SNAPSHOT
 
 topology_template:
   node_templates:

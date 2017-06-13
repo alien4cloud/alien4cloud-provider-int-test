@@ -13,20 +13,19 @@ Feature: Apache load balancer + tomcat
     # Archives
     And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
     And I upload the git archive "tosca-normative-types"
-    And I checkout the git archive from url "https://github.com/alien4cloud/tosca-normative-types.git" branch "master"
-    And I upload the git archive "tosca-normative-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/alien4cloud-extended-types.git" branch "master"
     And I upload the git archive "alien4cloud-extended-types/alien-base-types"
     And I upload the git archive "alien4cloud-extended-types/alien-extended-storage-types"
     And I checkout the git archive from url "https://github.com/alien4cloud/samples.git" branch "master"
-    And I upload the git archive "samples/jdk"
+    And I upload the git archive "samples/org/alien4cloud/lang/java/pub"
+    And I upload the git archive "samples/org/alien4cloud/lang/java/jdk/linux"
     And I upload the git archive "samples/apache-load-balancer"
     And I upload the git archive "samples/tomcat-war"
     And I upload the git archive "samples/topology-load-balancer-tomcat"
 
     # Cloudify 3
     And I upload a plugin from maven artifact "alien4cloud:alien4cloud-cloudify4-provider"
-#    And I upload a plugin from "../alien4cloud-cloudify4-provider"
+    # And I upload a plugin from "../alien4cloud-cloudify4-provider"
 
     # Orchestrator and location
     And I create an orchestrator named "Mount doom orchestrator" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"

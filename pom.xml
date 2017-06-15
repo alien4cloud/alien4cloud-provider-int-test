@@ -236,10 +236,9 @@
             <version>2.16</version>
             <configuration>
               <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-                <includes>
-                    <include>alien4cloud.it.RunCloudify3AmazonIT</include>
-                </includes>
               <skip>false</skip>
+              <skipITs>false</skipITs>
+              <skipTests>false</skipTests>
             </configuration>
             <executions>
               <execution>

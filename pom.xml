@@ -239,6 +239,7 @@
                 <includes>
                     <include>alien4cloud.it.RunCloudify3AmazonIT</include>
                 </includes>
+              <skip>false</skip>
             </configuration>
             <executions>
               <execution>

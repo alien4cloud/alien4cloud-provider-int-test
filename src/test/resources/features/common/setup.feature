@@ -2,7 +2,8 @@ Feature: Load test archives
 
   # This loads archives from git into alien4cloud
   Scenario: Load required archives from git
-    Given I add a GIT repository with url "https://github.com/alien4cloud/samples.git" usr "" pwd "" stored "false" and locations
+    Given I am authenticated with "ADMIN" role
+    And I add a GIT repository with url "https://github.com/alien4cloud/samples.git" usr "" pwd "" stored "false" and locations
       | branchId | subPath                             |
       | master   | org/alien4cloud/www/apache/pub      |
       | master   | org/alien4cloud/www/apache/linux_sh |

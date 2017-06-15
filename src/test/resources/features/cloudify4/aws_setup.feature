@@ -1,8 +1,9 @@
 Feature: Configure cloudify 4 orchestrator
 
   Scenario: Load required archives from git
+    Given I am authenticated with "ADMIN" role
     # Create orchestrator
-    Given I create an orchestrator named "cfy" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
+    And I create an orchestrator named "cfy" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "cfy"
     And I update cloudify 3 manager's url to value defined in environment variable "CFY_MANAGER_URL" for orchestrator with name "cfy"
     And I enable the orchestrator "cfy"

@@ -1,6 +1,6 @@
 Feature: Configure cloudify 4 orchestrator
 
-  Scenario: Load required archives from git
+  Scenario: Setup cloudify orchestrator
     Given I am authenticated with "ADMIN" role
     # Create orchestrator
     And I create an orchestrator named "cfy" and plugin name "alien-cloudify-4-orchestrator-premium" and bean name "cloudify-orchestrator"

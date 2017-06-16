@@ -25,3 +25,5 @@ Feature: Configure cloudify 4 orchestrator
     And I update the capability "os" property "version" to "14" for the resource named "Ubuntu" related to the location "cfy"/"aws"
     # Generate computes
     And I autogenerate the on-demand resources for the location "cfy"/"aws"
+    # Configure security groups
+    And I update the complex property "server" to """{"security_group_ids": ["sg-81001bf8"]}""" for the resource named "Small_Ubuntu" related to the location "cfy"/"aws"

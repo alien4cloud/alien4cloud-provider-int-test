@@ -15,7 +15,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(features = {
         //
         "classpath:features/cloudify4/aws_setup.feature", // Configure cfy orchestrator and aws location
-        "classpath:features/common/setup.feature", // Import test archives
+        "classpath:features/common/_setup.feature", // Import test archives
         "classpath:features/common/compute_software.feature" // Test linux compute support
         //
 }, format = { "pretty", "html:target/cucumber/cloudify3/amazon", "json:target/cucumber/cloudify3/cucumber-amazon.json" })

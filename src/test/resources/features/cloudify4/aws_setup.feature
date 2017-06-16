@@ -19,5 +19,9 @@ Feature: Configure cloudify 4 orchestrator
     # Create ubuntu image resource
     And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Ubuntu" related to the location "cfy"/"aws"
     And I update the property "id" to "ami-47a23a30" for the resource named "Ubuntu" related to the location "cfy"/"aws"
+    And I update the capability "os" property "architecture" to "x86_64" for the resource named "Ubuntu" related to the location "cfy"/"aws"
+    And I update the capability "os" property "type" to "linux" for the resource named "Ubuntu" related to the location "cfy"/"aws"
+    And I update the capability "os" property "distribution" to "ubuntu" for the resource named "Ubuntu" related to the location "cfy"/"aws"
+    And I update the capability "os" property "version" to "14" for the resource named "Ubuntu" related to the location "cfy"/"aws"
     # Generate computes
     And I autogenerate the on-demand resources for the location "cfy"/"aws"

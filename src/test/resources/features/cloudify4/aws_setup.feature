@@ -26,4 +26,4 @@ Feature: Configure cloudify 4 orchestrator
     # Generate computes
     And I autogenerate the on-demand resources for the location "cfy"/"aws"
     # Configure security groups
-    And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8"]}""" for the resource named "Small_Ubuntu" related to the location "cfy"/"aws"
+    And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Small_Ubuntu" related to the location "cfy"/"aws"

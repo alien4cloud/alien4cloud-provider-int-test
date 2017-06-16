@@ -3,9 +3,13 @@ Feature: Configure cloudify 4 orchestrator
   Scenario: Load required archives from git
     Given I am authenticated with "ADMIN" role
     # Create orchestrator
-    And I create an orchestrator named "cfy" and plugin name "alien-cloudify-4-orchestrator" and bean name "cloudify-orchestrator"
+    And I create an orchestrator named "cfy" and plugin name "alien-cloudify-4-orchestrator-premium" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "cfy"
-    And I update cloudify 3 manager's url to value defined in environment variable "CFY_MANAGER_URL" for orchestrator with name "cfy"
+    And I update configuration for orchestrator with name "cfy"
+      | url                    | CFY_MANAGER_URL      |
+      | userName               | CFY_MANAGER_USER     |
+      | password               | CFY_MANAGER_PASSWORD |
+      | disableSSLVerification | true                 |
     And I enable the orchestrator "cfy"
     # Create location
     And I create a location named "aws" and infrastructure type "amazon" to the orchestrator "cfy"

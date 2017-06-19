@@ -27,3 +27,7 @@ Feature: Configure cloudify 4 orchestrator
     And I autogenerate the on-demand resources for the location "cfy"/"aws"
     # Configure security groups
     And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Small_Ubuntu" related to the location "cfy"/"aws"
+    # Configure block storage
+    And I create a resource of type "alien.cloudify.aws.nodes.DeletableVolume" named "SmallDeletableBlock" related to the location "cfy"/"aws"
+    And I update the property "size" to "1 gib" for the resource named "SmallDeletableBlock" related to the location "cfy"/"aws"
+    And I update the property "device" to "/dev/sdf" for the resource named "SmallDeletableBlock" related to the location "cfy"/"aws"

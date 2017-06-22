@@ -25,6 +25,8 @@ Feature: Configure cloudify 4 orchestrator
     And I update the capability "os" property "version" to "14" for the resource named "Ubuntu" related to the location "cfy"/"aws"
     # Generate computes
     And I autogenerate the on-demand resources for the location "cfy"/"aws"
+    # Add public network
+    And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "Mount doom orchestrator"/"Thark location"
     # Configure security groups
     And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Small_Ubuntu" related to the location "cfy"/"aws"
     # Configure block storage

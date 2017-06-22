@@ -1,4 +1,4 @@
-package alien4cloud.it;
+package org.alien4cloud.it.run;
 
 import org.junit.runner.RunWith;
 
@@ -19,6 +19,7 @@ import cucumber.api.junit.Cucumber;
         "classpath:features/common/compute.feature", // Test linux compute support
         "classpath:features/common/compute.feature" // Test linux compute and deletable block storage support
         //
-}, format = { "pretty", "html:target/cucumber/cloudify3/amazon", "json:target/cucumber/cloudify3/cucumber-amazon.json" })
+}, format = { "pretty", "html:target/cucumber/cloudify3/amazon", "json:target/cucumber/cloudify3/cucumber-amazon.json" }, glue = { "alien4cloud.it",
+        "org.alien4cloud.it.aws" })
 public class RunCloudify4AmazonIT {
 }

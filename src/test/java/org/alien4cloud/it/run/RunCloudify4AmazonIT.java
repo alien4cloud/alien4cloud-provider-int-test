@@ -14,10 +14,10 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = {
         //
-        "classpath:features/cloudify4/aws_setup.feature", // Configure cfy orchestrator and aws location
-        "classpath:features/common/_setup.feature", // Import test archives
-        "classpath:features/common/compute.feature", // Test linux compute support
-        "classpath:features/common/compute.feature" // Test linux compute and deletable block storage support
+        "classpath:features/cloudify4/00_aws_setup.feature", // Configure cfy orchestrator and aws location
+        "classpath:features/common/00__setup.feature", // Import test archives
+        "classpath:features/location/01_compute.feature", // Test linux compute support
+        "classpath:features/location/02_compute_deletable_block.feature" // Test linux compute and deletable block storage support
         //
 }, format = { "pretty", "html:target/cucumber/cloudify3/amazon", "json:target/cucumber/cloudify3/cucumber-amazon.json" }, glue = { "alien4cloud.it",
         "org.alien4cloud.it.aws" })

@@ -9,7 +9,8 @@ Feature: Deletable Block Storage
     Then I should receive a RestResponse with no error
     # This is a timeout but this will end ASAP.
     And The application's deployment must succeed after 15 minutes
-    Then I should have a volume for node "BlockStorage"
+    And I should have a volume for node "BlockStorage"
+    And No volume id should be persisted for node "BlockStorage"
 
   @location @aws
   Scenario: Un deploy compute node with deletable block storage
@@ -17,5 +18,4 @@ Feature: Deletable Block Storage
     When I undeploy it
     Then I should receive a RestResponse with no error
     Then I should not have a volume for node "BlockStorage"
-
-    Then I should not have a volume on AWS with id defined in runtime property "" of the node "BlockStorage"
+    And No volume id should be persisted for node "BlockStorage"

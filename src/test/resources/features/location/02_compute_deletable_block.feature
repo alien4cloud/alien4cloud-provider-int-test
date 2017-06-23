@@ -3,7 +3,7 @@ Feature: Deletable Block Storage
   @location @aws
   Scenario: Deploy compute node with deletable block storage
     Given I am authenticated with "ADMIN" role
-    And I create a new application with name "compute" and description "Compute node support test" based on the template with name "org.alien4cloud.tests.topologies.computedeletableblock"
+    And I create a new application with name "computedeletableblock" and description "Deletable block storage support test" based on the template with name "org.alien4cloud.tests.topologies.computedeletableblock"
     And I Set a unique location policy to "cfy"/"aws" for all nodes
     When I deploy it
     Then I should receive a RestResponse with no error

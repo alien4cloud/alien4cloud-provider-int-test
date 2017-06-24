@@ -13,9 +13,9 @@ Feature: Configure cloudify 4 orchestrator
     And I enable the orchestrator "cfy"
     # Create location
     And I create a location named "aws" and infrastructure type "amazon" to the orchestrator "cfy"
-    # Configure small flavor resource
-    And I create a resource of type "alien.cloudify.aws.nodes.InstanceType" named "Small" related to the location "cfy"/"aws"
-    And I update the property "id" to "t2.small" for the resource named "Small" related to the location "cfy"/"aws"
+    # Configure nano flavor resource
+    And I create a resource of type "alien.cloudify.aws.nodes.InstanceType" named "Nano" related to the location "cfy"/"aws"
+    And I update the property "id" to "t2.nano" for the resource named "Nano" related to the location "cfy"/"aws"
     # Create ubuntu image resource
     And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Ubuntu" related to the location "cfy"/"aws"
     And I update the property "id" to "ami-47a23a30" for the resource named "Ubuntu" related to the location "cfy"/"aws"
@@ -28,7 +28,7 @@ Feature: Configure cloudify 4 orchestrator
     # Add public network
     And I create a resource of type "alien.nodes.aws.PublicNetwork" named "Internet" related to the location "cfy"/"aws"
     # Configure security groups
-    And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Small_Ubuntu" related to the location "cfy"/"aws"
+    And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Nano_Ubuntu" related to the location "cfy"/"aws"
     # Configure block storage
     And I create a resource of type "alien.cloudify.aws.nodes.DeletableVolume" named "SmallDeletableBlock" related to the location "cfy"/"aws"
     And I update the property "size" to "1 gib" for the resource named "SmallDeletableBlock" related to the location "cfy"/"aws"

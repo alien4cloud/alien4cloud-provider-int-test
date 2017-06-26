@@ -1,4 +1,4 @@
-tosca_definitions_version: alien_dsl_1_3_0
+tosca_definitions_version: alien_dsl_1_4_0
 
 metadata:
   template_name: lifecycle-registry
@@ -6,10 +6,10 @@ metadata:
   template_author: alien4cloud
 
 imports:
-  - tosca-normative-types:1.0.0-ALIEN12
-  - apache-type:2.0.0-SNAPSHOT
-  - demo-lifecycle:1.0.0-SNAPSHOT
-  - php-type:2.0.0-SNAPSHOT
+  - tosca-normative-types:1.0.0-ALIEN14
+  - apache-type:1.4.0-SNAPSHOT
+  - demo-lifecycle:1.4.0-SNAPSHOT
+  - php-type:1.4.0-SNAPSHOT
 
 topology_template:
   node_templates:

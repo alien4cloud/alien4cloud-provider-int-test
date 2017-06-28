@@ -7,6 +7,9 @@ Feature: Load test archives
       | branchId | subPath                             |
       | master   | org/alien4cloud/www/apache/pub      |
       | master   | org/alien4cloud/www/apache/linux_sh |
+      | master   | apache                              |
+      | master   | php                                 |
+      | master   | demo-lifecycle                      |
     And I get the GIT repo with url "https://github.com/alien4cloud/samples.git"
     And I import the GIT repository
     # public_a4c_build is a user that can just checkout the alien4cloud-it-archives project. This project is currently hosted on our private gitlab but will migrate later on github. It is however not a private project.

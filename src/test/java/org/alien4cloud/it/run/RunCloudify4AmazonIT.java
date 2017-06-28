@@ -18,7 +18,9 @@ import cucumber.api.junit.Cucumber;
         "classpath:features/common/00__setup.feature", // Import test archives
         "classpath:features/location/01_compute.feature", // Test linux compute support
         "classpath:features/location/02_compute_deletable_block.feature", // Test linux compute and deletable block storage support
-        "classpath:features/location/03_compute_block.feature" // Test linux compute and block storage support
+        "classpath:features/location/03_compute_block.feature", // Test linux compute and block storage support
+        "classpath:features/location/04_compute_network.feature", // Test linux compute with an Apache and a public IP
+        // "classpath:features/location/05_compute_exist_network.feature" // Not supported,
         //
 }, format = { "pretty", "html:target/cucumber/cloudify3/amazon", "json:target/cucumber/cloudify3/cucumber-amazon.json" }, glue = { "alien4cloud.it",
         "org.alien4cloud.it.aws" })

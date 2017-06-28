@@ -12,7 +12,7 @@ Feature: Lifecycle test
 
     When I deploy it
     Then I should receive a RestResponse with no error
-    And The application's deployment must succeed after 15 minutes
+    And The application's deployment must succeed after 30 minutes
     And The URL which is defined in attribute "url" of the node "Registry" should work
     And I store the attribute "url" of the node "Registry" as registered string "registry_url"
 
@@ -466,7 +466,7 @@ Feature: Lifecycle test
 
     When I deploy it
     Then I should receive a RestResponse with no error
-    And The application's deployment must succeed after 15 minutes
+    And The application's deployment must succeed after 30 minutes
     And The URL which is defined in attribute "url" of the node "Registry" should work
     And I store the attribute "url" of the node "Registry" as registered string "registry_url"
 
@@ -673,7 +673,7 @@ Feature: Lifecycle test
 
     When I deploy it
     Then I should receive a RestResponse with no error
-    And The application's deployment must succeed after 15 minutes
+    And The application's deployment must succeed after 30 minutes
     And The URL which is defined in attribute "url" of the node "Registry" should work
     And I store the attribute "url" of the node "Registry" as registered string "registry_url"
 

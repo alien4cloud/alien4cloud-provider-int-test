@@ -16,6 +16,9 @@ Feature: Configure cloudify 4 orchestrator
     # Configure nano flavor resource
     And I create a resource of type "alien.cloudify.aws.nodes.InstanceType" named "Nano" related to the location "cfy"/"aws"
     And I update the property "id" to "t2.nano" for the resource named "Nano" related to the location "cfy"/"aws"
+    # Configure large flavor resource (for windows test)
+    # And I create a resource of type "alien.cloudify.aws.nodes.InstanceType" named "Large" related to the location "cfy"/"aws"
+    # And I update the property "id" to "m3.large" for the resource named "Large" related to the location "cfy"/"aws"
     # Create ubuntu image resource
     And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Ubuntu" related to the location "cfy"/"aws"
     And I update the property "id" to "ami-47a23a30" for the resource named "Ubuntu" related to the location "cfy"/"aws"
@@ -23,10 +26,20 @@ Feature: Configure cloudify 4 orchestrator
     And I update the capability "os" property "type" to "linux" for the resource named "Ubuntu" related to the location "cfy"/"aws"
     And I update the capability "os" property "distribution" to "ubuntu" for the resource named "Ubuntu" related to the location "cfy"/"aws"
     And I update the capability "os" property "version" to "14" for the resource named "Ubuntu" related to the location "cfy"/"aws"
+    # Create windows image resource
+    And I create a resource of type "alien.cloudify.aws.nodes.Image" named "Windows" related to the location "cfy"/"aws"
+    And I update the property "id" to "ami-59809e3f" for the resource named "Windows" related to the location "cfy"/"aws"
+    And I update the capability "os" property "architecture" to "x86_64" for the resource named "Windows" related to the location "cfy"/"aws"
+    And I update the capability "os" property "type" to "windows" for the resource named "Windows" related to the location "cfy"/"aws"
     # Generate computes
     And I autogenerate the on-demand resources for the location "cfy"/"aws"
+    # Configure windows instance
+    And I update the property "key_pair" to the environment variable "AWS_KEY_NAME" for the resource named "Nano_Windows" related to the location "cfy"/"aws"
+    And I update the property "user" to "cloudify" for the resource named "Nano_Windows" related to the location "cfy"/"aws"
+    And I update the property "password" to "Cl@ud1fy234!" for the resource named "Nano_Windows" related to the location "cfy"/"aws"
     # Configure security groups
     And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Nano_Ubuntu" related to the location "cfy"/"aws"
+    And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Nano_Windows" related to the location "cfy"/"aws"
     # Configure agent client
     And I update the complex property "cloudify_agent" to """{"user": "ubuntu"}""" for the resource named "Nano_Ubuntu" related to the location "cfy"/"aws"
     # Configure deletable block storage

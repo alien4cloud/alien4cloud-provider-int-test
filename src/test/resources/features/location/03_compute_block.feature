@@ -1,4 +1,4 @@
-Feature: Deletable Block Storage
+Feature: Block Storage
 
   @location @aws
   Scenario: Deploy compute node with block storage

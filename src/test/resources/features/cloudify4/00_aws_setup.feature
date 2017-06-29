@@ -40,6 +40,8 @@ Feature: Configure cloudify 4 orchestrator
     # Configure security groups
     And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Nano_Ubuntu" related to the location "cfy"/"aws"
     And I update the complex property "parameters" to """{"security_group_ids": ["sg-81001bf8","sg-cffd98b6"]}""" for the resource named "Nano_Windows" related to the location "cfy"/"aws"
+    # Configure agent client
+    And I update the complex property "cloudify_agent" to """{"user": "ubuntu"}""" for the resource named "Nano_Ubuntu" related to the location "cfy"/"aws"
     # Configure deletable block storage
     And I create a resource of type "alien.cloudify.aws.nodes.DeletableVolume" named "SmallDeletableBlock" related to the location "cfy"/"aws"
     And I update the property "size" to "1 gib" for the resource named "SmallDeletableBlock" related to the location "cfy"/"aws"

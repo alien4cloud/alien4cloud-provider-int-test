@@ -441,11 +441,14 @@ Feature: Lifecycle test
       | #\d+ - remove_source/GenericA/\d+/.+ |
       | #\d+ - delete                        |
 
+    When I undeploy it
+    Then I should receive a RestResponse with no error
+
 
   Scenario: Scaling default 2 then 3 for A and B
     Given I am authenticated with "ADMIN" role
 
-    And I create a new application with name "test-lifecycle-2" and description "Test alien4cloud lifecycle: Scaling default 2 then 3 for A and B" based on the template with name "org.alien4cloud.tests.topologies.lifecycle"
+    And I create a new application with name "test-lifecycle-2a" and description "Test alien4cloud lifecycle: Scaling default 2 then 3 for A and B" based on the template with name "org.alien4cloud.tests.topologies.lifecycle"
     And I execute the operation
       | type           | org.alien4cloud.tosca.editor.operations.nodetemplate.UpdateCapabilityPropertyValueOperation |
       | nodeName       | ComputeA                                                                                    |
@@ -660,6 +663,8 @@ Feature: Lifecycle test
       | #\d+ - start                                  |
       | #\d+ - add_target/GenericB/2/${GenericB_2_id} |
 
+    When I undeploy it
+    Then I should receive a RestResponse with no error
 
   Scenario: Should be able to read injected properties as input
 
@@ -696,3 +701,6 @@ Feature: Lifecycle test
       | ^  "nested" : "node toto",$                   |
       | ^  "nested_array" : \\[ "titi", "tuctuc" \\]$ |
       | ^\\}$                                         |
+
+    When I undeploy it
+    Then I should receive a RestResponse with no error

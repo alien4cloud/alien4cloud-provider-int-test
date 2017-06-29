@@ -21,6 +21,7 @@ import cucumber.api.junit.Cucumber;
         "classpath:features/location/03_compute_block.feature", // Test linux compute and block storage support
         "classpath:features/location/04_compute_network.feature", // Test linux compute with an Apache and a public IP
         // "classpath:features/location/05_compute_exist_network.feature" // Not supported,
+        "classpath:features/zartifact/24_compute_ansible.feature", // Test linux compute with an ansible artifact
         //
 }, format = { "pretty", "html:target/cucumber/cloudify3/amazon", "json:target/cucumber/cloudify3/cucumber-amazon.json" }, glue = { "alien4cloud.it",
         "org.alien4cloud.it.aws" })

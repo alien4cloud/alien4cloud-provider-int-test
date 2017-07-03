@@ -22,6 +22,7 @@ import cucumber.api.junit.Cucumber;
         "classpath:features/location/04_compute_network.feature",               // Test linux compute with an Apache and a public IP
         // "classpath:features/location/05_compute_exist_network.feature"       // Not supported,
         "classpath:features/orchestrator/20_lifecycle.feature",                 // Check that orchestrator execute correct lifecycle
+        "classpath:features/postdeployment/60_predifinedoperation.feature",
         // "classpath:features/postdeployment/62_auto_heal.feature",            //Test auto heal  --> KO
         "classpath:features/postdeployment/63_scaling.feature",                 // Test scale / unscale and loadbalancer
         "classpath:features/zartifact/24_compute_ansible.feature"               // Test linux compute with an ansible artifact

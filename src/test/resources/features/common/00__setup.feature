@@ -19,6 +19,11 @@ Feature: Load test archives
       | master   | org/alien4cloud/lang/java/pub        |
       | master   | org/alien4cloud/lang/java/jdk/linux  |
       | master   | tomcat-war                           |
+      | master   | mongo                                |
+      | master   | nodejs                               |
+      | master   | nodecellar                           |
+      | master   | topology-mongo                       |
+      | master   | topology-nodecellar-service          |
     And I get the GIT repo with url "https://github.com/alien4cloud/samples.git"
     And I import the GIT repository
     # public_a4c_build is a user that can just checkout the alien4cloud-it-archives project. This project is currently hosted on our private gitlab but will migrate later on github. It is however not a private project.

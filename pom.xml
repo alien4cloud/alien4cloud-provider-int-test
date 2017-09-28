@@ -222,10 +222,10 @@
       </build>
     </profile>
     <profile>
-      <id>do-test-remote</id>
+      <id>cfy4-aws</id>
       <activation>
         <property>
-          <name>doTestRemote</name>
+          <name>runCfy4Aws</name>
         </property>
       </activation>
       <build>
@@ -236,6 +236,9 @@
             <version>2.16</version>
             <configuration>
               <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+              <skip>false</skip>
+              <skipITs>false</skipITs>
+              <skipTests>false</skipTests>
             </configuration>
             <executions>
               <execution>

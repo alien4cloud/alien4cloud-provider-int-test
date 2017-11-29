@@ -1,7 +1,7 @@
 package org.alien4cloud.it.common;
 
+import alien4cloud.deployment.DeploymentTopologyDTO;
 import alien4cloud.it.Context;
-import alien4cloud.rest.deployment.DeploymentTopologyDTO;
 import alien4cloud.rest.model.RestResponse;
 import alien4cloud.rest.utils.JsonUtil;
 import alien4cloud.utils.PropertyUtil;

@@ -9,6 +9,7 @@ Feature: Configure cloudify 4 orchestrator
       | url                    | CFY_MANAGER_URL             |
       | userName               | CFY_MANAGER_USER            |
       | password               | CFY_MANAGER_PASSWORD        |
+      | logQueuePort           | CFY_MANAGER_LOG_PORT        |
       | disableSSLVerification | true                        |
       | postDeploymentRestURL  | AWS_POST_DEPLOYMENT_APP_URL |
     And I enable the orchestrator "cfy"

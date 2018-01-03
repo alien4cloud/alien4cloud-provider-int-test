@@ -13,8 +13,18 @@ CLOUDIFY3_MANAGER_PASSWORD
 
 Refactor:
 
-To test CFY :
+1. To test CFY :
 
 CFY_MANAGER_URL
 CFY_MANAGER_USER
 CFY_MANAGER_PASSWORD
+
+2. To test Vault Provider, the following environment variables are necessary:
+
+ALIEN_URL
+CFY_MANAGER_URL
+CFY_MANAGER_USER
+CFY_MANAGER_PASSWORD
+CFY_MANAGER_LOG_PORT
+VAULT_URL
+CERTIFICATE_PATH    (It is the path to the server certificate file.)

@@ -12,10 +12,10 @@ Feature: Execute the custom command with Vault Secret Provider
 
     # Archives
     And I successfully upload the local archive "csars/secret-management-test"
-    And I successfully upload the local archive "csars/topology-secret-management-test"
+    And I successfully upload the local archive "csars/topology-secret-management-custom-workflow"
 
     # Create the application
-    And I create a new application with name "SecretManagementCustomCommandExecution" and description "Secret management test with vault and ldap" based on the template with name "topology-secret-management-test"
+    And I create a new application with name "SecretManagementCustomWorkflowExecution" and description "Secret management test with vault and ldap" based on the template with name "topology-secret-management-custom-workflow"
     And I Set a unique location policy to "cfy"/"aws" for all nodes
 
     # Deploy the application
@@ -33,18 +33,11 @@ Feature: Execute the custom command with Vault Secret Provider
     Then the registered string "secretPropertyTxt" lines should match the following regex sequence
       | ^Secret property : guigui$ |
 
-    # Execute custom command operation
-    When I trigger on the node template "SecretComponent" the custom command "custom_command" of the interface "custom" for application "SecretManagementCustomCommandExecution" using the secret provider "alien-vault-plugin" and the secret credentials "user: guobao, password: alien" with parameters:
-      # Should use the json format if the property value is a function
-      | complex_input | {"function": "get_secret", "parameters": ["secret/mysql_password"]} |
-      | secret_input  | {"function": "get_secret", "parameters": ["secret/mysql_password"]} |
+    # Execute custom workflow operation
+    When I launch the workflow "updateSecret" in the environment view after the deployment using the secret provider "alien-vault-plugin" with the following secret credentials:
+      | user     | guobao |
+      | password | alien  |
     Then I should receive a RestResponse with no error
-    When I call the URL which is defined in registered string "apache_url" with path "/html/vault/test/complex_input.txt" and fetch the response and store it in the context as "complexInputTxt"
-    Then the registered string "complexInputTxt" lines should match the following regex sequence
-      | ^Complex input : guigui$ |
-    When I call the URL which is defined in registered string "apache_url" with path "/html/vault/test/secret_input.txt" and fetch the response and store it in the context as "secretInputTxt"
-    Then the registered string "secretInputTxt" lines should match the following regex sequence
-      | ^Secret input : guigui$ |
 
     When I undeploy it
     Then I should receive a RestResponse with no error

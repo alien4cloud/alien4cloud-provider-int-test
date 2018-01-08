@@ -12,7 +12,7 @@ Feature: Configure cloudify 4 orchestrator
       | logQueuePort               | CFY_MANAGER_LOG_PORT        |
       | disableSSLVerification     | true                        |
       | disableDiamondMonitorAgent | true                        |
-#      | postDeploymentRestURL      | AWS_POST_DEPLOYMENT_APP_URL |
+      | postDeploymentRestURL      | AWS_POST_DEPLOYMENT_APP_URL |
     And I enable the orchestrator "cfy"
     # Create location
     And I create a location named "aws" and infrastructure type "amazon" to the orchestrator "cfy"

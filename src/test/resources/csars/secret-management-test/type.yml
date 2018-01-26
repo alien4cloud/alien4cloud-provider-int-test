@@ -1,0 +1,46 @@
+tosca_definitions_version: alien_dsl_2_0_0
+
+metadata:
+  template_name: secret-test
+  template_version: 2.0.0-SNAPSHOT
+  template_author: alien4cloud
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN20SM5
+
+description: Component to test custom command with get_secret
+
+node_types:
+ org.alien4cloud.nodes.SecretComponent:
+    derived_from: tosca.nodes.SoftwareComponent
+    description: Component to test get_secret
+    attributes:
+      secret_att: { get_operation_output: [ SELF, Standard, create, SECRET_OUTPUT ] }
+    properties:
+      secret_prop:
+        type: string
+        description: set a secret here
+        required: false
+    interfaces:
+      Standard:
+        create:
+          inputs:
+            secret_property: { get_property: [SELF, secret_prop] }
+            secret: { get_secret: [ secret/mysql_password ] }
+          implementation: scripts/install.sh
+      custom:
+        custom_command:
+          inputs:
+            complex_input:
+              type: tosca.datatypes.Credential
+              description: set a complex here
+              required: true
+            secret_input:
+              type: string
+              description: set a secret here
+              required: true
+            secret: { get_secret: [ secret/mysql_password ] }
+            secret_output: { get_operation_output: [ SELF, Standard, create, SECRET_OUTPUT ] }
+            secret_attribute: { get_attribute: [ SELF, secret_att ] }
+            secret_property: { get_property: [SELF, secret_prop] }
+          implementation: scripts/install.sh

@@ -1,0 +1,40 @@
+tosca_definitions_version: alien_dsl_2_0_0
+
+metadata:
+  template_name: ec2instance-template
+  template_version: 0.1.0-SNAPSHOT
+  template_author: alien4cloud
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN20SM5
+  - aws-custom-resources:1.4.0-SNAPSHOT
+  - mysql-type:1.4.0-SNAPSHOT
+
+topology_template:
+  node_templates:
+    EC2Instance:
+      type: org.alien4cloud.aws.cloudify.EC2Instance
+      properties:
+        agent_config:
+          install_method: none
+          user: ubuntu
+          key: ubuntu
+        aws_access_key_id: { get_secret: [secret/aws_access_key_id] }
+        aws_secret_access_key: { get_secret: [secret/aws_secret_access_key] }
+        aws_default_region: { get_secret: [secret/aws_default_region] }
+        image_id: { get_secret: [secret/image_id] }
+        instance_type: { get_secret: [secret/instance_type] }
+        security_group_ids: { get_secret: [secret/security_group_ids] }
+        key_name: { get_secret: [secret/key_name] }
+      capabilities:
+        scalable:
+          properties:
+            min_instances: 1
+            max_instances: 1
+            default_instances: 1
+        endpoint:
+          properties:
+            secure: true
+            protocol: tcp
+            network_name: PRIVATE
+            initiator: source

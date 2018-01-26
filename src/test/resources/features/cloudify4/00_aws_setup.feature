@@ -6,11 +6,13 @@ Feature: Configure cloudify 4 orchestrator
     And I create an orchestrator named "cfy" and plugin name "alien-cloudify-4-orchestrator-premium" and bean name "cloudify-orchestrator"
     And I get configuration for orchestrator "cfy"
     And I update configuration for orchestrator with name "cfy"
-      | url                    | CFY_MANAGER_URL             |
-      | userName               | CFY_MANAGER_USER            |
-      | password               | CFY_MANAGER_PASSWORD        |
-      | disableSSLVerification | true                        |
-      | postDeploymentRestURL  | AWS_POST_DEPLOYMENT_APP_URL |
+      | url                        | CFY_MANAGER_URL             |
+      | userName                   | CFY_MANAGER_USER            |
+      | password                   | CFY_MANAGER_PASSWORD        |
+      | logQueuePort               | CFY_MANAGER_LOG_PORT        |
+      | disableSSLVerification     | true                        |
+      | disableDiamondMonitorAgent | true                        |
+      | postDeploymentRestURL      | AWS_POST_DEPLOYMENT_APP_URL |
     And I enable the orchestrator "cfy"
     # Create location
     And I create a location named "aws" and infrastructure type "amazon" to the orchestrator "cfy"

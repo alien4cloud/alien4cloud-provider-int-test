@@ -6,7 +6,7 @@
     <version>1.4.4-SNAPSHOT</version>
   </parent>
   <artifactId>alien4cloud-provider-int-test</artifactId>
-  <version>1.4.3.4-SNAPSHOT</version>
+  <version>1.4.3.6</version>
   <name>Provider end to end integration tests</name>
 
   <repositories>
